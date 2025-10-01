@@ -9,8 +9,9 @@ var a = [];
 
 const postserver = http.createServer((req, res) => {
   var q = url.parse(req.url, true).query;
-  q.ip = "Guest";
-    if (q.title || q.sid) {
+  // Change: Use the 'username' from query params, fallback to 'Guest' if not provided
+  q.ip = q.username || 'Guest';  // Or rename 'ip' to 'username' for clarity: q.username = q.username || 'Guest';
+  if (q.title || q.sid) {
     a.push(q);
   }
   if (a.length > 16) {

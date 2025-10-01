@@ -49,6 +49,10 @@
                             </h3>
                         </td>
                     </tr>
+                    <tr><td><div>
+  Username
+  <input type="text" id="username-input">
+</div></td></tr>
                     <tr>
                         <td>
                             <div class="option-name">
@@ -400,6 +404,16 @@
   gtag('js', new Date());
 
   gtag('config', 'UA-169262247-1');
+</script>
+<script>
+  const usernameInput = document.getElementById('username-input');
+  // Load from localStorage, fallback to 'guest' if not set
+  usernameInput.value = localStorage.getItem('username') || 'Guest';
+  // Save on change, fallback to 'guest' if empty
+  usernameInput.addEventListener('input', () => {
+    const value = usernameInput.value.trim() || 'Guest';
+    localStorage.setItem('username', value);
+  });
 </script>
     </body>
 </html>

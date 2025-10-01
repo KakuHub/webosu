@@ -249,29 +249,35 @@ define([], function()
             this.setSpriteArrayPos(this.comboDigits, basex + this.scoreDigits.width / 2 + 16*unit, basey + 3*unit);
         }
 
-        function uploadScore(summary) {
-            let xhr = new XMLHttpRequest();
-            let url = "https://api.kaku.moe/send/";
-            url += "?sid=" + encodeURIComponent(summary.sid);
-            url += "&bid=" + encodeURIComponent(summary.bid);
-            url += "&title=" + encodeURIComponent(summary.title);
-            url += "&version=" + encodeURIComponent(summary.version);
-            url += "&mods=" + encodeURIComponent(summary.mods);
-            url += "&grade=" + encodeURIComponent(summary.grade);
-            url += "&score=" + encodeURIComponent(summary.score);
-            url += "&combo=" + encodeURIComponent(summary.combo);
-            url += "&acc=" + encodeURIComponent(summary.acc);
-            url += "&time=" + encodeURIComponent(summary.time);
-            xhr.open("GET", url);
-            console.log(url);
-            xhr.onload = function() {
-                console.log("play record uploaded");
-            }
-            xhr.onerror = function() {
-                console.error("play record upload failed");
-            }
-            xhr.send();
-        }
+function uploadScore(summary) {
+    // Retrieve username from localStorage, fallback to 'guest'
+    const username = localStorage.getItem('username') || 'Guest';
+
+    let xhr = new XMLHttpRequest();
+    let url = "http://api.kaku.moe/send/";
+    url += "?sid=" + encodeURIComponent(summary.sid);
+    url += "&bid=" + encodeURIComponent(summary.bid);
+    url += "&title=" + encodeURIComponent(summary.title);
+    url += "&version=" + encodeURIComponent(summary.version);
+    url += "&mods=" + encodeURIComponent(summary.mods);
+    url += "&grade=" + encodeURIComponent(summary.grade);
+    url += "&score=" + encodeURIComponent(summary.score);
+    url += "&combo=" + encodeURIComponent(summary.combo);
+    url += "&acc=" + encodeURIComponent(summary.acc);
+    url += "&time=" + encodeURIComponent(summary.time);
+    // Add the username parameter
+    url += "&username=" + encodeURIComponent(username);
+
+    xhr.open("GET", url);
+    console.log(url);
+    xhr.onload = function() {
+        console.log("play record uploaded");
+    }
+    xhr.onerror = function() {
+        console.error("play record upload failed");
+    }
+    xhr.send();
+}
 
         this.showSummary = function(metadata, hiterrors, retryCallback, quitCallback) {
             function errortext(a) {
