@@ -254,7 +254,7 @@ function uploadScore(summary) {
     const username = localStorage.getItem('username') || 'Guest';
 
     let xhr = new XMLHttpRequest();
-    let url = "http://api.kaku.moe/send/";
+    let url = "https://api.kaku.moe/send/";
     url += "?sid=" + encodeURIComponent(summary.sid);
     url += "&bid=" + encodeURIComponent(summary.bid);
     url += "&title=" + encodeURIComponent(summary.title);

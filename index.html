@@ -198,7 +198,7 @@ showActivity([b,b,b,b,b,b,b,b,b,b])
 function refreshLivescore(){
     let xhr = new XMLHttpRequest();
     xhr.responseType = 'text';
-    xhr.open("GET", "http://api.kaku.moe/fetch/");
+    xhr.open("GET", "https://api.kaku.moe/fetch/");
     xhr.onload = function() {
         showActivity(JSON.parse(xhr.response));
     }
