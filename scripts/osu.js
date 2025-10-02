@@ -197,22 +197,6 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                         self.hitObjects.push(hit);
                         break;
                 }
-// Remove old game metadata element if it exists
-const old = document.getElementById("game-beatmap-metadata");
-if (old) old.remove();
-
-// Create a hidden audio element to store metadata for RPC
-let a = document.createElement("audio");
-a.id = "game-beatmap-metadata";
-a.dataset.title = self.metadata.Title || "Unknown Song";
-a.dataset.artist = self.metadata.Artist || "Unknown Artist";
-a.dataset.diff = self.metadata.Version || "";
-
-// Not actually used for playback, just storage
-a.style.display = "none";
-
-document.body.appendChild(a);
-            }
             // Make some corrections
             this.general.PreviewTime /= 10;
             if (this.general.PreviewTime > this.hitObjects[0].time) {
