@@ -197,17 +197,21 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                         self.hitObjects.push(hit);
                         break;
                 }
-                const old = document.getElementById("game-beatmap-metadata");
-                if (old) old.remove();
+// Remove old game metadata element if it exists
+const old = document.getElementById("game-beatmap-metadata");
+if (old) old.remove();
 
-                 // Create hidden element for RPC
-                let a = document.createElement("audio");
-                a.id = "game-beatmap-metadata";
-                a.dataset.title = self.metadata.Title || "Unknown Song";
-                a.dataset.artist = self.metadata.Artist || "Unknown Artist";
-                a.dataset.diff = self.metadata.Version || "";
-                a.style.display = "none";
-                document.body.appendChild(a);
+// Create a hidden audio element to store metadata for RPC
+let a = document.createElement("audio");
+a.id = "game-beatmap-metadata";
+a.dataset.title = self.metadata.Title || "Unknown Song";
+a.dataset.artist = self.metadata.Artist || "Unknown Artist";
+a.dataset.diff = self.metadata.Version || "";
+
+// Not actually used for playback, just storage
+a.style.display = "none";
+
+document.body.appendChild(a);
             }
             // Make some corrections
             this.general.PreviewTime /= 10;
@@ -223,9 +227,10 @@ let a = document.createElement("audio");
 a.id = "game-beatmap-metadata";
 a.dataset.title = self.metadata.Title || "Unknown Song";
 a.dataset.artist = self.metadata.Artist || "Unknown Artist";
-a.dataset.diff = self.metadata.Version || "";
+a.dataset.diff = self.metadata.Version || "Unknown Difficulty";
 a.style.display = "none";
 
+// This guarantees it's the diff you actually loaded
 document.body.appendChild(a);
 // -----------------------------------
 
