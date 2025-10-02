@@ -204,21 +204,6 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                 this.general.PreviewTime = 0;
             } // WTF is this
 
-// --- INSERT METADATA ELEMENT HERE ---
-const old = document.getElementById("game-beatmap-metadata");
-if (old) old.remove();
-
-let a = document.createElement("audio");
-a.id = "game-beatmap-metadata";
-a.dataset.title = self.metadata.Title || "Unknown Song";
-a.dataset.artist = self.metadata.Artist || "Unknown Artist";
-a.dataset.diff = self.metadata.Version || "Unknown Difficulty";
-a.style.display = "none";
-
-// This guarantees it's the diff you actually loaded
-document.body.appendChild(a);
-// -----------------------------------
-
             // complete with default values
             if (this.colors.length === 0) {
                 this.colors = [

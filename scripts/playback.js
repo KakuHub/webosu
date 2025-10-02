@@ -23,6 +23,17 @@ function(Osu, setPlayerActions, SliderMesh, ScoreOverlay, VolumeMenu, LoadingMen
         self.game = game;
         self.osu = osu;
         self.track = track;
+        // --- Inject beatmap metadata for Discord RPC ---
+const oldMeta = document.getElementById("game-beatmap-metadata");
+if (oldMeta) oldMeta.remove();
+
+let meta = document.createElement("audio"); // hidden element, reused by your presence script
+meta.id = "game-beatmap-metadata";
+meta.dataset.title = self.track.metadata.Title || "Unknown Song";
+meta.dataset.artist = self.track.metadata.Artist || "Unknown Artist";
+meta.dataset.diff = self.track.metadata.Version || "Unknown Difficulty";
+meta.style.display = "none";
+document.body.appendChild(meta);
         self.background = null;
         self.started = false;
         self.upcomingHits = [];
