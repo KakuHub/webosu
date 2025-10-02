@@ -198,6 +198,12 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                         break;
                 }
             }
+const gameArea = document.getElementById("game-area");
+if (gameArea) {
+    gameArea.dataset.title = self.metadata.Title || 'Unknown Song';
+    gameArea.dataset.artist = self.metadata.Artist || 'Unknown Artist';
+    gameArea.dataset.diff = self.metadata.Version || '';
+}
             // Make some corrections
             this.general.PreviewTime /= 10;
             if (this.general.PreviewTime > this.hitObjects[0].time) {
