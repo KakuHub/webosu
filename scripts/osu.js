@@ -197,6 +197,7 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                         self.hitObjects.push(hit);
                         break;
                 }
+            }
             // Make some corrections
             this.general.PreviewTime /= 10;
             if (this.general.PreviewTime > this.hitObjects[0].time) {
