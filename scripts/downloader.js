@@ -11,7 +11,8 @@ function startpreview(box) {
         if (audios[i].softstop)
             audios[i].softstop();
     let a = document.createElement("audio");
-a.dataset.title = box.setdata.title; // store title
+    a.dataset.title = box.setdata.title;
+    a.dataset.artist = box.setdata.artist;
     let s = document.createElement("source");
     s.src = `https://catboy.best/preview/audio/${box.sid}?set=1`;
     s.type = "audio/mpeg";
