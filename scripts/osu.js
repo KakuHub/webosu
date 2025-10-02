@@ -198,12 +198,14 @@ function(_, OsuAudio, LinearBezier, CircumscribedCircle) {
                         break;
                 }
             }
-let a = document.createElement("audio");
-a.dataset.title = self.metadata.Title || 'Unknown Song';
-a.dataset.artist = self.metadata.Artist || 'Unknown Artist';
-a.dataset.diff = self.metadata.Version || '';
-a.id = 'game-beatmap-metadata';
-document.body.appendChild(a);
+            const old = document.getElementById("game-beatmap-metadata");
+            if (old) old.remove();
+            let a = document.createElement("audio");
+            a.dataset.title = self.metadata.Title || 'Unknown Song';
+            a.dataset.artist = self.metadata.Artist || 'Unknown Artist';
+            a.dataset.diff = self.metadata.Version || '';
+            a.id = 'game-beatmap-metadata';
+            document.body.appendChild(a);
             // Make some corrections
             this.general.PreviewTime /= 10;
             if (this.general.PreviewTime > this.hitObjects[0].time) {
