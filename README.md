@@ -8,13 +8,25 @@ Note: This is an unofficial implementation of [osu!](https://osu.ppy.sh). Scorin
 
 ## Screenshots
 
-web page:
+Web page:
 
 ![webpage](screenshots/page3.png)
 
-game in action:
+Game in action:
 
 ![webpage](screenshots/clip3.gif)
+
+Discord Rich Presence:
+
+![webpage](screenshots/discord1.png)
+
+![webpage](screenshots/discord2.png)
+
+![webpage](screenshots/discord3.png)
+
+## Discord Rich Presence
+
+Install Premid extension in your browser and enable activity developer, then hit load build activity under that and select the webosu.zip in discord-rpc-premid folder
 
 ## Hosting
 
