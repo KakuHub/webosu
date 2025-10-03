@@ -1,91 +1,97 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>FAQ</title>
-        <meta property="og:title" content="FAQ">
-        <meta property="og:site_name" content="Webosu!">
-        <meta property="og:url" content="https://osu.kaku.moe">
-        <meta property="og:description" content="osu! but in a browser">
-        <meta property="og:type" content="website">
-        <meta property="og:image" content="https://osu.kaku.moe/icon.png"></head>
 
-        <link rel="stylesheet" href="style/picnic.min.css">
-        <link rel="stylesheet" type="text/css" href="style/main.css">
-        <!-- <link href="//fonts.googleapis.com/css?family=Exo+2:400,600italic" rel="stylesheet" type="text/css"> -->
-        <link rel="stylesheet" type="text/css" href="style/font.css">
-        <link rel="icon" href="favicon.png">
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>FAQ</title>
+    <meta property="og:title" content="FAQ">
+    <meta property="og:site_name" content="Webosu!">
+    <meta property="og:url" content="https://osu.kaku.moe">
+    <meta property="og:description" content="osu! but in a browser">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://osu.kaku.moe/icon.png">
+</head>
 
-    <body>
-        <nav id="main-nav">
-            <div class="nav-link">
-                <a href="index.html" class="brand">kaku.moe</a>
-                <a href="new.html" class="pseudo button">Latest</a>
-                <a href="hot.html" class="pseudo button">Hot</a>
-                <a href="listing.html" class="pseudo button">Listing</a>
+<link rel="stylesheet" href="style/picnic.min.css">
+<link rel="stylesheet" type="text/css" href="style/main.css">
+<!-- <link href="//fonts.googleapis.com/css?family=Exo+2:400,600italic" rel="stylesheet" type="text/css"> -->
+<link rel="stylesheet" type="text/css" href="style/font.css">
+<link rel="icon" href="favicon.png">
+</head>
+
+<body>
+    <nav id="main-nav">
+        <div class="nav-link">
+            <a href="index.html" class="brand">kaku.moe</a>
+            <a href="new.html" class="pseudo button">Latest</a>
+            <a href="hot.html" class="pseudo button">Hot</a>
+            <a href="listing.html" class="pseudo button">Listing</a>
+        </div>
+        <div class="nav-search">
+            <form action="search.html">
+                <input type="text" name="q" placeholder="Search Beatmap" />
+                <input type="image" class="search-button" src="research.svg">
+            </form>
+        </div>
+        <div class="nav-tool">
+            <a href="favorites.html" class="pseudo button">Favorites</a>
+            <a href="faq.html" class="pseudo button active">FAQ</a>
+            <a href="settings.html" class="pseudo button">Settings</a>
+            <a onclick="document.documentElement.requestFullscreen();" class="pseudo button">Fullscreen</a>
+        </div>
+    </nav>
+
+    <div class="main-page" id="main-page">
+        <div class="main-content">
+            <div class="faqentry">
+                <h2>How do you play this game?</h2>
+                The keys default to the left and right mouse buttons and the Z and X keys, which can be modified in the
+                settings. The circles that appear on the game screen are called percussion circles. When the circle on
+                the outside of the percussion circle narrows and falls just onto the percussion circle, click the
+                percussion circle. Some strike rings have a slider that you need to hold down and follow. When a large
+                disc appears on the screen, press and hold the button to rotate quickly around the center of the circle.
             </div>
-            <div class="nav-search">
-                <form action="search.html">
-                    <input type="text" name="q" placeholder="Search Beatmap"/>
-                    <input type="image" class="search-button" src="research.svg">
-                </form>
+            <div class="faqentry">
+                <h2>Does the cursor move seem a little delayed?</h2>
+                Try enabling the hardware cursor in the settings, which reduces the delay in cursor feedback. However,
+                some operating systems or browsers may experience flashing or unable to display cursors, so they are
+                turned off by default. In addition, the current hardware cursor size adjustment only fixed 3 gears,
+                below 0.65 is shown as the minimum, in 0.95 or above is displayed as the maximum.
             </div>
-            <div class="nav-tool">
-                <a href="favorites.html" class="pseudo button">Favorites</a>
-                <a href="faq.html" class="pseudo button active">FAQ</a>
-                <a href="settings.html" class="pseudo button">Settings</a>
-                <a onclick="document.documentElement.requestFullscreen();" class="pseudo button">Fullscreen</a>
+            <div class="faqentry">
+                <h2>Game running poorly?</h2>
+                You can uncheck Use System Resolution in settings and set the resolution to a lower value than system
+                scaling (laptops or pc systems with high-resolution screens typically scale more than 100%). It is
+                recommended to avoid excessive CPU usage, try closing other tabs in your browser and restarting your
+                browser. Make sure you're using a mainstream modern browser (such as Edge, Firefox, Chrome). Still
+                having trouble? Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>.
             </div>
-        </nav>
+            <div class="faqentry">
+                <h2>Why doesn't anything appear on the page?</h2>
+                There may be an error with the beatmap mirror that provide beatmaps. You can see that there is nothing
+                on the <a href="https://osu.sayobot.cn/home/new">Sayobot</a> home page of the beatmap mirror. If so you
+                can contact the owner of the beatmap mirror for recovery.
+            </div>
+            <div class="faqentry">
+                <h2>The downloader (IDM) on my computer pops up a lot of pop-ups!</h2>
+                This site uses XHR to load audio-visual resources. Please set the downloader (IDM) to disable it on this
+                site.
+            </div>
+            <div class="faqentry">
+                <h2>Want to join my Discord?</h2>
+                <a href="https://discord.gg/AQt76hVJ3N">Invite link</a>
+            </div>
+            <div class="faqentry">
+                <h2>The sound is out of sync?</h2>
+                Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>
+            </div>
 
-        <div class="main-page" id="main-page">
-            <div class="main-content">
-                <div class="faqentry">
-                    <h2>How do you play this game?</h2>
-                    The keys default to the left and right mouse buttons and the Z and X keys, which can be modified in the settings. The circles that appear on the game screen are called percussion circles. When the circle on the outside of the percussion circle narrows and falls just onto the percussion circle, click the percussion circle. Some strike rings have a slider that you need to hold down and follow. When a large disc appears on the screen, press and hold the button to rotate quickly around the center of the circle.                </div>
-                <div class="faqentry">
-                    <h2>Does the cursor move seem a little delayed?</h2>
-                    Try enabling the hardware cursor in the settings, which reduces the delay in cursor feedback. However, some operating systems or browsers may experience flashing or unable to display cursors, so they are turned off by default. In addition, the current hardware cursor size adjustment only fixed 3 gears, below 0.65 is shown as the minimum, in 0.95 or above is displayed as the maximum.
-                </div>
-                <div class="faqentry">
-        			<h2>Game running poorly?</h2>
-        			You can uncheck Use System Resolution in settings and set the resolution to a lower value than system scaling (laptops or pc systems with high-resolution screens typically scale more than 100%). It is recommended to avoid excessive CPU usage, try closing other tabs in your browser and restarting your browser. Make sure you're using a mainstream modern browser (such as Edge, Firefox, Chrome). Still having trouble? Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>.
-                </div>
-                <div class="faqentry">
-                    <h2>Why doesn't anything appear on the page?</h2>
-                    There may be an error with the beatmap mirror that provide beatmaps. You can see that there is nothing on the <a href="https://osu.sayobot.cn/home/new">Sayobot</a> home page of the beatmap mirror. If so you can contact the owner of the beatmap mirror for recovery.                </div>
-                <div class="faqentry">
-                    <h2>The downloader (IDM) on my computer pops up a lot of pop-ups!</h2>
-                    This site uses XHR to load audio-visual resources. Please set the downloader (IDM) to disable it on this site.
-                </div>
-                <div class="faqentry">
-                    <h2>Want to join my Discord?</h2>
-                    <a href="https://discord.gg/AQt76hVJ3N">Invite link</a>
-                </div>
-                <div class="faqentry">
-                    <h2>The sound is out of sync?</h2>
-                    Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>
-                </div>
-
-                <div class="faqentry">
-                    <h2>Other questions?</h2>
-                    Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>
-                </div>
+            <div class="faqentry">
+                <h2>Other questions?</h2>
+                Please mention <a href="https://github.com/Sensokaku/webosu">issue</a>
             </div>
         </div>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169262247-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    </div>
+</body>
 
-  gtag('config', 'UA-169262247-1');
-</script>
-    </body>
 </html>
-
-<!-- attribution -->
-<!-- play icon made by https://www.flaticon.com/authors/those-icons -->
-<!-- search icon made by https://www.flaticon.com/authors/good-ware -->
