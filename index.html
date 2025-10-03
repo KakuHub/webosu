@@ -187,7 +187,7 @@
                     else
                         td.innerText = content;
                 }
-                nexttd(records[i].ip || 'Guest');
+                nexttd(records[i].username || 'Guest');
                 let title = document.createElement("a");
                 title.innerText = records[i].title + " [" + records[i].version + "]";
                 title.title = records[i].title + " [" + records[i].version + "]";
