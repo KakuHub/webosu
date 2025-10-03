@@ -10,8 +10,7 @@
 *   
 */
 
-define([], function()
-{
+define([], function () {
     function addPlayHistory(summary) {
         if (!window.playHistory1000) {
             window.playHistory1000 = [];
@@ -21,7 +20,7 @@ define([], function()
             window.playHistory1000.shift();
         // save history
         if (window.localforage) {
-            localforage.setItem("playhistory1000", window.playHistory1000, function(err, val){
+            localforage.setItem("playhistory1000", window.playHistory1000, function (err, val) {
                 if (err) {
                     console.error("Error saving play history");
                 }
@@ -43,17 +42,17 @@ define([], function()
     }
     LazyNumber.prototype.lag = 200;
     // param time must be non-decreasing
-    LazyNumber.prototype.update = function(time) {
+    LazyNumber.prototype.update = function (time) {
         this.value += (this.target - this.value) * (1 - Math.exp((this.lasttime - time) / this.lag));
         this.lasttime = time;
     }
     // param time must be non-decreasing
-    LazyNumber.prototype.set = function(time, value) {
+    LazyNumber.prototype.set = function (time, value) {
         this.update(time);
         this.target = value;
     }
     // param time must be non-decreasing
-    LazyNumber.prototype.valueAt = function(time) {
+    LazyNumber.prototype.valueAt = function (time) {
         this.update(time);
         return this.value;
     }
@@ -90,9 +89,9 @@ define([], function()
         this.accuracy4display = new LazyNumber(1);
         this.HP4display = new LazyNumber(this.HP);
 
-        this.newSpriteArray = function(len, scaleMul = 1, tint = 0xffffff) {
-            let a = new Array(len); 
-            for (let i=0; i<len; ++i) {
+        this.newSpriteArray = function (len, scaleMul = 1, tint = 0xffffff) {
+            let a = new Array(len);
+            for (let i = 0; i < len; ++i) {
                 a[i] = new PIXI.Sprite();
                 a[i].scale.x = a[i].scale.y = this.scaleMul * scaleMul;
                 a[i].anchor.x = 0;
@@ -120,13 +119,13 @@ define([], function()
         this.HPbar[2].y = -7 * this.scaleMul;
 
         // value initialization ends
-        
-        this.resize = function(windowfield) {
+
+        this.resize = function (windowfield) {
             this.field = windowfield;
             this.scaleMul = windowfield.height / 800;
 
-            let f = function(a, mul) {
-                for (let i=0; i<a.length; ++i) {
+            let f = function (a, mul) {
+                for (let i = 0; i < a.length; ++i) {
                     a[i].scale.x = a[i].scale.y = mul;
                 }
             };
@@ -142,9 +141,8 @@ define([], function()
             this.HPbar[2].y = -7 * this.scaleMul;
         }
 
-        this.HPincreasefor = function(result) {
-            switch (result)
-            {
+        this.HPincreasefor = function (result) {
+            switch (result) {
                 case 0:
                     return -0.02 * this.HPdrain;
                 case 50:
@@ -161,7 +159,7 @@ define([], function()
         // should be called when note is hit or missed
         // maxresult: 300 for a hitcircle / slider start & end of every repeat
         // maxresult: 10 for a tick
-        this.hit = function(result, maxresult, time) {
+        this.hit = function (result, maxresult, time) {
             if (maxresult == 300) {
                 if (result == 300) this.judgecnt.great++;
                 if (result == 100) this.judgecnt.good++;
@@ -173,7 +171,7 @@ define([], function()
             this.score += this.scoreMultiplier * result * (1 + this.combo / 25);
             // any zero-score result is a miss
             let oldCombo = this.combo;
-            this.combo = (result > 0)? this.combo+1 : 0;
+            this.combo = (result > 0) ? this.combo + 1 : 0;
             if (result == 0) {
                 this.fullcombo = false;
                 // combo creak
@@ -196,11 +194,11 @@ define([], function()
 
         this.charspacing = 10; // in texture pixel
 
-        this.setSpriteArrayText = function(arr, str) {
+        this.setSpriteArrayText = function (arr, str) {
             let width = 0;
             if (str.length > arr.length)
                 console.error("displaying string failed");
-            for (let i=0; i<str.length; ++i) {
+            for (let i = 0; i < str.length; ++i) {
                 let ch = str[i];
                 if (ch == "%") ch = "percent";
                 let textname = "score-" + ch + ".png";
@@ -209,25 +207,25 @@ define([], function()
                 arr[i].visible = true;
                 width += arr[i].knownwidth;
             }
-            for (let i=str.length; i<arr.length; ++i) {
+            for (let i = str.length; i < arr.length; ++i) {
                 arr[i].visible = false;
             }
             arr.width = width;
             arr.useLength = str.length;
         }
 
-        this.setSpriteArrayPos = function(arr, x, y) {
+        this.setSpriteArrayPos = function (arr, x, y) {
             let curx = x;
-            if (arr.useLength > 0) {} // TODO
-                else throw "wtf!";
-            for (let i=0; i<arr.useLength; ++i) {
+            if (arr.useLength > 0) { } // TODO
+            else throw "wtf!";
+            for (let i = 0; i < arr.useLength; ++i) {
                 arr[i].x = curx + arr[i].scale.x * this.charspacing / 2;
                 arr[i].y = y;
                 curx += arr[i].knownwidth;
             }
         }
 
-        this.update = function(time) {
+        this.update = function (time) {
             if (Number.isNaN(time)) {
                 console.error("score overlay update with time = NaN");
                 return;
@@ -237,71 +235,71 @@ define([], function()
             this.HPbar[1].x = HPpos;
             this.HPbar[2].x = HPpos;
 
-            this.setSpriteArrayText(this.scoreDigits, Math.round(this.score4display.valueAt(time)).toString().padStart(6,'0'));
+            this.setSpriteArrayText(this.scoreDigits, Math.round(this.score4display.valueAt(time)).toString().padStart(6, '0'));
             this.setSpriteArrayText(this.comboDigits, Math.round(this.combo4display.valueAt(time)).toString() + "x");
             this.setSpriteArrayText(this.accuracyDigits, (this.accuracy4display.valueAt(time) * 100).toFixed(2) + "%");
-           
+
             let basex = this.field.width * 0.5;
             let basey = this.field.height * 0.017;
             let unit = Math.min(this.field.width / 640, this.field.height / 480);
             this.setSpriteArrayPos(this.scoreDigits, basex - this.scoreDigits.width / 2, basey);
-            this.setSpriteArrayPos(this.accuracyDigits, basex - this.scoreDigits.width / 2 - this.accuracyDigits.width - 16*unit, basey + 3*unit);
-            this.setSpriteArrayPos(this.comboDigits, basex + this.scoreDigits.width / 2 + 16*unit, basey + 3*unit);
+            this.setSpriteArrayPos(this.accuracyDigits, basex - this.scoreDigits.width / 2 - this.accuracyDigits.width - 16 * unit, basey + 3 * unit);
+            this.setSpriteArrayPos(this.comboDigits, basex + this.scoreDigits.width / 2 + 16 * unit, basey + 3 * unit);
         }
 
-function uploadScore(summary) {
-    // Retrieve username from localStorage, fallback to 'guest'
-    const username = localStorage.getItem('username') || 'Guest';
+        function uploadScore(summary) {
+            // Retrieve username from localStorage, fallback to 'guest'
+            const username = localStorage.getItem('username') || 'Guest';
 
-    let xhr = new XMLHttpRequest();
-    let url = "https://api.kaku.moe/send/";
-    url += "?sid=" + encodeURIComponent(summary.sid);
-    url += "&bid=" + encodeURIComponent(summary.bid);
-    url += "&title=" + encodeURIComponent(summary.title);
-    url += "&version=" + encodeURIComponent(summary.version);
-    url += "&mods=" + encodeURIComponent(summary.mods);
-    url += "&grade=" + encodeURIComponent(summary.grade);
-    url += "&score=" + encodeURIComponent(summary.score);
-    url += "&combo=" + encodeURIComponent(summary.combo);
-    url += "&acc=" + encodeURIComponent(summary.acc);
-    url += "&time=" + encodeURIComponent(summary.time);
-    // Add the username parameter
-    url += "&username=" + encodeURIComponent(username);
+            let xhr = new XMLHttpRequest();
+            let url = "https://api.kaku.moe/send/";
+            url += "?sid=" + encodeURIComponent(summary.sid);
+            url += "&bid=" + encodeURIComponent(summary.bid);
+            url += "&title=" + encodeURIComponent(summary.title);
+            url += "&version=" + encodeURIComponent(summary.version);
+            url += "&mods=" + encodeURIComponent(summary.mods);
+            url += "&grade=" + encodeURIComponent(summary.grade);
+            url += "&score=" + encodeURIComponent(summary.score);
+            url += "&combo=" + encodeURIComponent(summary.combo);
+            url += "&acc=" + encodeURIComponent(summary.acc);
+            url += "&time=" + encodeURIComponent(summary.time);
+            // Add the username parameter
+            url += "&username=" + encodeURIComponent(username);
 
-    xhr.open("GET", url);
-    console.log(url);
-    xhr.onload = function() {
-        console.log("play record uploaded");
-            if (xhr.status === 200) {
-            const score = parseInt(summary.score) || 0;
-            const xpEarned = Math.floor(score / 1000);
-            const accuracy = parseFloat(summary.acc) || 0; // New: Parse accuracy
-            window.gamesettings.totalXP = (window.gamesettings.totalXP || 0) + xpEarned;
-            window.gamesettings.totalScore = (window.gamesettings.totalScore || 0) + score;
-            // New: Update totalAccuracy and playCount
-            window.gamesettings.totalAccuracy = (window.gamesettings.totalAccuracy || 0) + accuracy;
-            window.gamesettings.playCount = (window.gamesettings.playCount || 0) + 1;
-            window.localStorage.setItem("osugamesettings", JSON.stringify(window.gamesettings));
-            if (typeof window.updatePlayerLevel === 'function') {
-                window.updatePlayerLevel();
+            xhr.open("GET", url);
+            console.log(url);
+            xhr.onload = function () {
+                console.log("play record uploaded");
+                if (xhr.status === 200) {
+                    const score = parseInt(summary.score) || 0;
+                    const xpEarned = Math.floor(score / 1000);
+                    const accuracy = parseFloat(summary.acc) || 0; // New: Parse accuracy
+                    window.gamesettings.totalXP = (window.gamesettings.totalXP || 0) + xpEarned;
+                    window.gamesettings.totalScore = (window.gamesettings.totalScore || 0) + score;
+                    // New: Update totalAccuracy and playCount
+                    window.gamesettings.totalAccuracy = (window.gamesettings.totalAccuracy || 0) + accuracy;
+                    window.gamesettings.playCount = (window.gamesettings.playCount || 0) + 1;
+                    window.localStorage.setItem("osugamesettings", JSON.stringify(window.gamesettings));
+                    if (typeof window.updatePlayerLevel === 'function') {
+                        window.updatePlayerLevel();
+                    }
+                }
             }
+            xhr.onerror = function () {
+                console.error("play record upload failed");
+            }
+            xhr.send();
         }
-    }
-    xhr.onerror = function() {
-        console.error("play record upload failed");
-    }
-    xhr.send();
-}
 
-        this.showSummary = function(metadata, hiterrors, retryCallback, quitCallback) {
+        this.showSummary = function (metadata, hiterrors, retryCallback, quitCallback) {
             function errortext(a) {
                 let sum = 0;
-                for (let i=0; i<a.length; ++i)
+                for (let i = 0; i < a.length; ++i)
                     sum += a[i];
                 let avg = sum / a.length;
                 let sumsqerr = 0;
-                for (let i=0; i<a.length; ++i)
-                    sumsqerr += (a[i]-avg) * (a[i]-avg);
+                for (let i = 0; i < a.length; ++i)
+                    sumsqerr += (a[i] - avg) * (a[i] - avg);
                 let variance = sumsqerr / a.length;
                 let stdev = Math.sqrt(variance);
                 let sgnavg = avg.toFixed(0);
@@ -319,7 +317,7 @@ function uploadScore(summary) {
                 if (game.autoplay) l.push("AT");
                 if (l.length == 0) return "";
                 let s = l[0];
-                for (let i=1; i<l.length; ++i)
+                for (let i = 1; i < l.length; ++i)
                     s = s + '+' + l[i];
                 return s;
             }
@@ -334,7 +332,7 @@ function uploadScore(summary) {
                 return div;
             }
             let acc = this.judgeTotal / this.maxJudgeTotal;
-            let rank = this.HP<0? "F": grade(acc);
+            let rank = this.HP < 0 ? "F" : grade(acc);
             let grading = newdiv(null, "grading");
             grading.classList.add("transparent");
             document.body.appendChild(grading);
@@ -349,7 +347,7 @@ function uploadScore(summary) {
             newdiv(top, "grade " + rank, rank);
             let left = newdiv(grading, "left");
             newdiv(left, "block score", Math.round(this.score).toString());
-            newdiv(left, "block acc", (acc*100).toFixed(2)+"%");
+            newdiv(left, "block acc", (acc * 100).toFixed(2) + "%");
             newdiv(left, "block err", errortext(hiterrors));
             newdiv(left, "block great", this.judgecnt.great.toString());
             newdiv(left, "block good", this.judgecnt.good.toString());
@@ -361,17 +359,17 @@ function uploadScore(summary) {
                 newdiv(left, "fullcombo");
             let b1 = newdiv(grading, "btn retry");
             newdiv(b1, "inner", "Retry");
-            b1.onclick = function() {
+            b1.onclick = function () {
                 grading.remove();
                 retryCallback();
             }
             let b2 = newdiv(grading, "btn quit");
             newdiv(b2, "inner", "Quit");
-            b2.onclick = function() {
+            b2.onclick = function () {
                 grading.remove();
                 quitCallback();
             }
-            window.setTimeout(function(){grading.classList.remove("transparent")},100);
+            window.setTimeout(function () { grading.classList.remove("transparent") }, 100);
             // generate summary data
             let summary = {
                 sid: metadata.BeatmapSetID,
@@ -382,14 +380,14 @@ function uploadScore(summary) {
                 grade: rank,
                 score: Math.round(this.score).toString(),
                 combo: this.maxcombo.toString(),
-                acc: (acc*100).toFixed(2)+"%",
+                acc: (acc * 100).toFixed(2) + "%",
                 time: new Date().getTime()
             }
             addPlayHistory(summary);
             uploadScore(summary);
             // show history best
             if (window.localforage && summary.bid) {
-                window.localforage.getItem("historybest", function(err, val) {
+                window.localforage.getItem("historybest", function (err, val) {
                     if (err) return;
                     let historybest = 0;
                     if (val && val.size) {
@@ -400,7 +398,7 @@ function uploadScore(summary) {
                         if (!val || !val.size)
                             val = new Map();
                         val.set(summary.bid, parseInt(summary.score));
-                        window.localforage.setItem("historybest", val, function(err, val){
+                        window.localforage.setItem("historybest", val, function (err, val) {
                             if (err) console.error("failed saving best score");
                         });
                     }
@@ -409,14 +407,13 @@ function uploadScore(summary) {
             }
         }
     }
-    
-    if ( PIXI.Container ) { ScoreOverlay.__proto__ = PIXI.Container; }
-    ScoreOverlay.prototype = Object.create( PIXI.Container && PIXI.Container.prototype );
+
+    if (PIXI.Container) { ScoreOverlay.__proto__ = PIXI.Container; }
+    ScoreOverlay.prototype = Object.create(PIXI.Container && PIXI.Container.prototype);
     ScoreOverlay.prototype.constructor = ScoreOverlay;
 
 
-    ScoreOverlay.prototype.destroy = function destroy (options)
-    {
+    ScoreOverlay.prototype.destroy = function destroy(options) {
         PIXI.Container.prototype.destroy.call(this, options);
     };
 
