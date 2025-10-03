@@ -272,6 +272,20 @@ function uploadScore(summary) {
     console.log(url);
     xhr.onload = function() {
         console.log("play record uploaded");
+            if (xhr.status === 200) {
+            const score = parseInt(summary.score) || 0;
+            const xpEarned = Math.floor(score / 1000);
+            const accuracy = parseFloat(summary.acc) || 0; // New: Parse accuracy
+            window.gamesettings.totalXP = (window.gamesettings.totalXP || 0) + xpEarned;
+            window.gamesettings.totalScore = (window.gamesettings.totalScore || 0) + score;
+            // New: Update totalAccuracy and playCount
+            window.gamesettings.totalAccuracy = (window.gamesettings.totalAccuracy || 0) + accuracy;
+            window.gamesettings.playCount = (window.gamesettings.playCount || 0) + 1;
+            window.localStorage.setItem("osugamesettings", JSON.stringify(window.gamesettings));
+            if (typeof window.updatePlayerLevel === 'function') {
+                window.updatePlayerLevel();
+            }
+        }
     }
     xhr.onerror = function() {
         console.error("play record upload failed");
