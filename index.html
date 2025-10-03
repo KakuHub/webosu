@@ -209,20 +209,18 @@
         function updatePlayerLevel() {
             const totalXP = window.gamesettings.totalXP || 0;
             const totalScore = window.gamesettings.totalScore || 0;
-            const totalAccuracy = window.gamesettings.totalAccuracy || 0; // New
-            const playCount = window.gamesettings.playCount || 0; // New
-            const baseLevel = Math.floor(Math.sqrt(2 * totalXP / 1000));
+            const totalAccuracy = window.gamesettings.totalAccuracy || 0;
+            const playCount = window.gamesettings.playCount || 0;
+            const baseLevel = Math.floor(Math.sqrt(2 * totalXP / 800)); // Reduced from 1000 for smoother early progression
             const level = baseLevel + 1; // Start at Level 1
-            const nextLevelXP = ((baseLevel + 1) ** 2 * 1000) / 2;
-            const prevLevelXP = (baseLevel ** 2 * 1000) / 2;
+            const nextLevelXP = ((baseLevel + 1) ** 2 * 800) / 2; // Adjusted curve
+            const prevLevelXP = (baseLevel ** 2 * 800) / 2;
             const progress = totalXP === 0 ? 0 : ((totalXP - prevLevelXP) / (nextLevelXP - prevLevelXP) * 100).toFixed(0);
             const username = window.gamesettings.username || 'guest';
-            // New: Calculate average accuracy
-            const averageAccuracy = playCount === 0 ? 100 : (totalAccuracy / playCount).toFixed(2);
+            const averageAccuracy = playCount === 0 ? 0 : (totalAccuracy / playCount).toFixed(2);
 
             document.getElementById('player-username').innerText = username;
             document.getElementById('player-score').innerText = `Score: ${totalScore.toLocaleString()}`;
-            // New: Display accuracy
             document.getElementById('player-accuracy').innerText = `Accuracy: ${averageAccuracy}%`;
             document.getElementById('player-playcount').innerText = `Plays: ${playCount.toLocaleString()}`;
             document.getElementById('player-level').innerText = `Lv${level}`;

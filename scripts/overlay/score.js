@@ -272,14 +272,20 @@ define([], function () {
                 console.log("play record uploaded");
                 if (xhr.status === 200) {
                     const score = parseInt(summary.score) || 0;
-                    const xpEarned = Math.floor(score / 1000);
-                    const accuracy = parseFloat(summary.acc) || 0; // New: Parse accuracy
+                    const accuracy = parseFloat(summary.acc) || 0;
+                    const maxCombo = parseInt(summary.combo) || 0;
+                    let baseXP = Math.floor(score / 1000) * 2; // 3x base for faster progression
+                    let accBonus = 0;
+                    if (accuracy > 95) accBonus = Math.floor(baseXP * 0.2); // +20% for SS/S
+                    else if (accuracy > 90) accBonus = Math.floor(baseXP * 0.1); // +10% for A
+                    let comboBonus = maxCombo > 200 ? 50 : 0; // Bonus for high combos
+                    const xpEarned = baseXP + accBonus + comboBonus;
                     window.gamesettings.totalXP = (window.gamesettings.totalXP || 0) + xpEarned;
                     window.gamesettings.totalScore = (window.gamesettings.totalScore || 0) + score;
-                    // New: Update totalAccuracy and playCount
                     window.gamesettings.totalAccuracy = (window.gamesettings.totalAccuracy || 0) + accuracy;
                     window.gamesettings.playCount = (window.gamesettings.playCount || 0) + 1;
                     window.localStorage.setItem("osugamesettings", JSON.stringify(window.gamesettings));
+                    console.log(`Gained ${xpEarned} XP (base: ${baseXP}, acc bonus: ${accBonus}, combo: ${comboBonus}) from ${score} score at ${accuracy}% acc`);
                     if (typeof window.updatePlayerLevel === 'function') {
                         window.updatePlayerLevel();
                     }
