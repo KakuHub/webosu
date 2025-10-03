@@ -24,16 +24,13 @@ function(Osu, setPlayerActions, SliderMesh, ScoreOverlay, VolumeMenu, LoadingMen
         self.osu = osu;
         self.track = track;
         // --- Inject beatmap metadata for Discord RPC ---
-const oldMeta = document.getElementById("game-beatmap-metadata");
-if (oldMeta) oldMeta.remove();
-
-let meta = document.createElement("audio"); // hidden element, reused by your presence script
-meta.id = "game-beatmap-metadata";
-meta.dataset.title = self.track.metadata.Title || "Unknown Song";
-meta.dataset.artist = self.track.metadata.Artist || "Unknown Artist";
-meta.dataset.diff = self.track.metadata.Version || "Unknown Difficulty";
-meta.style.display = "none";
-document.body.appendChild(meta);
+        let meta = document.createElement("audio");
+        meta.id = "game-beatmap-metadata";
+        meta.dataset.title = self.track.metadata.Title || "Unknown Song";
+        meta.dataset.artist = self.track.metadata.Artist || "Unknown Artist";
+        meta.dataset.diff = self.track.metadata.Version || "Unknown Difficulty";
+        meta.style.display = "none";
+        document.body.appendChild(meta);
         self.background = null;
         self.started = false;
         self.upcomingHits = [];
@@ -1295,6 +1292,11 @@ document.body.appendChild(meta);
         this.destroy = function() {
             // clean up
             console.log("playback:destroy");
+
+            // --- Remove metadata element so RPC goes back to Browsing ---
+            const oldMeta = document.getElementById("game-beatmap-metadata");
+            if (oldMeta) oldMeta.remove();
+
             _.each(self.hits, function(hit){
                 if (!hit.destroyed) {
                     _.each(hit.objects, function(o) { self.gamefield.removeChild(o); o.destroy(); });

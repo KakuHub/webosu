@@ -1,6 +1,8 @@
 // beatmap downloader
 
 function startpreview(box) {
+    stoppreview();
+
     let volume = 1;
     if (window.gamesettings) {
         volume = (window.gamesettings.mastervolume/200) * (window.gamesettings.musicvolume/200);
@@ -11,6 +13,7 @@ function startpreview(box) {
         if (audios[i].softstop)
             audios[i].softstop();
     let a = document.createElement("audio");
+    a.id = "preview-audio";
     a.dataset.title = box.setdata.title;
     a.dataset.artist = box.setdata.artist;
     let s = document.createElement("source");
@@ -26,11 +29,19 @@ function startpreview(box) {
         else
             clearInterval(fadeIn);
     }, 30);
-    let fadeOut = setInterval(function(){
-        if (a.currentTime > 9.3) // assume it's 10s long
-            a.volume = Math.max(0, a.volume - 0.05*volume);
-        if (a.volume == 0)
-            clearInterval(fadeOut);
+    // Auto fadeout AFTER 9.3s
+    let fadeOutStarted = false;
+    let fadeOut = setInterval(function() {
+        if (!fadeOutStarted && a.currentTime > 9.3) {
+            fadeOutStarted = true;
+        }
+        if (fadeOutStarted) {
+            a.volume = Math.max(0, a.volume - 0.05 * volume);
+            if (a.volume === 0) {
+                clearInterval(fadeOut);
+                a.remove();
+            }
+        }
     }, 30);
     a.softstop = function() {
         let fadeOut = setInterval(function(){
@@ -40,6 +51,20 @@ function startpreview(box) {
                 a.remove();
             }
         }, 10);
+    }
+}
+
+function stoppreview() {
+    let preview = document.getElementById("preview-audio");
+    if (preview) {
+        // Run its fade-out if available
+        if (preview.softstop) {
+            preview.softstop();
+        } else {
+            // fallback: just remove
+            preview.pause();
+            preview.remove();
+        }
     }
 }
 
