@@ -65,15 +65,6 @@ nav {
   padding-right: 1em;
 }
 
-nav .brand {
-  font-size: 1.1em;
-  line-height: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-  box-sizing: content-box;
-  margin-top: 0.515em;
-}
-
 .nav-link {
   display: flex;
 }
