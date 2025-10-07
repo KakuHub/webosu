@@ -80,7 +80,7 @@ function startdownload(box) {
 	if (box.downloading) {
 		return;
 	}
-	let url = "https://rina.place/d/" + box.sid + "n";
+	let url = "https://api.nerinyan.moe/d/" + box.sid + "n";
 	box.downloading = true;
     box.classList.add("downloading");
     let xhr = new XMLHttpRequest();
